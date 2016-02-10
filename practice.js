@@ -2,7 +2,7 @@
   // 1) What is the purpose of the 'this keyword'?
 
       //Answer
-
+// The "this" keyword is used as a shortcut. It refers to an object; that is, the subject in context, or the subject of the executing code.
   // 2) What are the four rules that govern what the 'this keyword' is bound to and describe each?
 
       //Answer
@@ -10,11 +10,12 @@
   // 3) What is the difference between call and apply?
 
       //Answer
+//      The difference between "call" and apply are that both can be called on functions, which the run in the context of the first argument.  In "call" the subsequent arguments are passed in to the function as they are, while "apply" expects the second argument to be an array that it ubacks as arguments for the called "function"
 
   // 4) What does .bind do?
 
       //Answer
-
+// We use the "bind" method primarily to call a "function" with the "this" value set expilicitly. In other words, "bind()" allows us to easily set which specific object will be "bound" to "this" when a "function" or method is invoked.
 
 //Next Problem
 
@@ -24,19 +25,37 @@
   //getUsername --> which is a function that returns the current object's username property. *Don't use 'user' instead use the 'this' keyword*
 
     //Code Here
-
+var user = {
+  username: "mslends",
+  email: "mslends@gmail.com",
+  getUsername: function () {
+    return this.username;
+  }
+};
 //Now, invoke the getUsername method and verify you got the username of the object and not anything else.
 
 
 //Next Problem
-
+user.getUsername();
 
 // Write the function definitions which will make the following function invocations function properly.
 
   //Function Invocations Here
-
+function Car (make, model, year) {
+  var Car = {
+    make: make,
+    model: model,
+    year: year,
+    move: 0,
+    moveCar: function () {
+      return this.move = this.move + 10;
+    }
+  };
+  return Car;
+}
 var prius = new Car('Toyota', 'Prius', 2011);
 var mustang = new Car('Ford', 'Mustang', 2013);
+
 
 prius.moveCar(); //increments prius' move property by 10. Returns the new move property.
 mustang.moveCar(); //increments mustang' move property by 10. Returns the new move property.
@@ -55,7 +74,8 @@ var getYear = function(){
 
 //Note(no tests)
   //Code Here
-
+getYear.call(prius);
+getYear.call(mustang);
 
 //New Problem
 
@@ -76,9 +96,10 @@ setTimeout(getMyUsername, 5000);
 //Above you're given an object, a function, and a setTimeout invocation. After 5 seconds, what will the getUsername function return?
 //Note(no tests)
   //Answer Here
-
+undefined
 //In the example above, what is the 'this keyword' bound to when getUsername runs?
 
   //Answer Here
 
 //Fix the setTimeout invocation so that the user object will be the focal object when getUsername is ran.
+setTimeout(getMyUsername.bind(myUser),5000);
